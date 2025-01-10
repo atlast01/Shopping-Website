@@ -6,6 +6,8 @@
     <title>Shopping Website</title>
 
     <link rel="stylesheet" href="index.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="index.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -31,47 +33,22 @@
 
     <div class="container">
         <div class="sideber">
-            <input type="text" class="sideber-search" placeholder="Search">
+            <input onkeyup="searchsomething(this)" id="TxT_search" type="text" class="sideber-search" placeholder="Search">
 
-            <a href="#" class="sideber-item">
-                Menu1
+            <a onclick="searchproduck('all')" class="sideber-item">
+                All product
             </a>
-            <a href="#" class="sideber-item">
-                Menu2
+            <a onclick="searchproduck('boy')" class="sideber-item">
+                Boy
             </a>
-            <a href="#" class="sideber-item">
-                Menu3
-            </a>
-            <a href="#" class="sideber-item">
-                Menu4
+            <a onclick="searchproduck('girl')" class="sideber-item">
+                Girl
             </a>
         </div>
-        <div class="product">
-            <div class="product-item">
-                <img src="./img/my-notion-face-customized.png" alt="product-image" class="product-image">
-                <p class="product-name">Product Name</p>
-                <p class="product-price">Price: $100</p>
-            </div>
-            <div class="product-item">
-                <img src="./img/my-notion-face-customized.png" alt="product-image" class="product-image">
-                <p class="product-name">Product Name</p>
-                <p class="product-price">Price: $100</p>
-            </div>
-            <div class="product-item">
-                <img src="./img/my-notion-face-customized.png" alt="product-image" class="product-image">
-                <p class="product-name">Product Name</p>
-                <p class="product-price">Price: $100</p>
-            </div>
-            <div class="product-item">
-                <img src="./img/my-notion-face-customized.png" alt="product-image" class="product-image">
-                <p class="product-name">Product Name</p>
-                <p class="product-price">Price: $100</p>
-            </div>
-            <div class="product-item">
-                <img src="./img/my-notion-face-customized.png" alt="product-image" class="product-image">
-                <p class="product-name">Product Name</p>
-                <p class="product-price">Price: $100</p>
-            </div>
+        <div id="productlist" class="product">
+
+           
+
         </div>
     </div>
 
@@ -101,7 +78,7 @@
         </div>
     </div>
 
-    <div class="modal">
+    <div class="modal" style="display: none;">
         <div class="modal-bg"></div>
         <div class="modal-page">
             <h2>My Cart</h2>

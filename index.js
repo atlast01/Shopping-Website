@@ -24,7 +24,7 @@ var produck = [{
 $(document).ready(() => { 
     var html = '';
     for (let i = 0; i < produck.length; i++) {
-        html += `<div class="product-item ${produck[i].type}">
+        html += `<div onclick="openProduckDetail(${i})" class="product-item ${produck[i].type}">
                     <img src="${produck[i].img}" alt="product-image" class="product-image">
                     <p class="product-name">${produck[i].name}</p>
                     <p class="product-price">$ ${ numberWithCommas (produck[i].price) }</p>
@@ -49,7 +49,7 @@ function searchsomething(elem) {
     var html = '';
     for (let i = 0; i < produck.length; i++) {
         if( produck[i].name.includes(value) ) {
-            html += `<div class="product-item ${produck[i].type}">
+            html += `<div onclick="openProduckDetail(${i})" class="product-item ${produck[i].type}">
                     <img src="${produck[i].img}" alt="product-image" class="product-image">
                     <p class="product-name">${produck[i].name}</p>
                     <p class="product-price">$ ${ numberWithCommas (produck[i].price) }</p>
@@ -71,5 +71,123 @@ function searchproduck(param) {
         $('.product-item').css('display', 'block')
     } else {
         $('.'+param).css('display', 'block')
+    }
+}
+
+var produckindex = 0;
+function openProduckDetail(index) {
+    produckindex = index;
+    console.log(produckindex)
+    $("#modalDesc").css('display', 'flex')
+    $("#mdd-img").attr('src', produck[index].img);
+    $("#mdd-name").text(produck[index].name);
+    $("#mdd-price").text('$ '+ numberWithCommas (produck[index].price));
+    $("#mdd-desc").text(produck[index].description);
+}
+
+function closeModal() {
+    $(".modal").css('display', 'none') 
+}
+
+var cart = [];
+function addtocart() {
+    var pass = true;
+
+    for (let i = 0; i < cart.length; i++) {
+        if (produckindex == cart[i].index) {
+            console.log('found same product')
+            cart[i].count++;
+            pass = false;
+        }
+    }
+
+    if (pass) {
+        var obj = {
+            index: produckindex,
+            id: produck[produckindex].id,
+            name: produck[produckindex].name,
+            price: produck[produckindex].price,
+            img: produck[produckindex].img,
+            count: 1
+        };
+        //console.log(obj)
+        cart.push(obj);
+    }
+    console.log(cart)
+
+    Swal.fire({
+        icon: 'success',
+        title: 'Add ' + produck[produckindex].name + ' to cart !'
+    })
+    $("#cartcount").css('display', 'flex').text(cart.length)
+}
+
+function openCart() {
+    $('#modalCart').css('display', 'flex')
+    rendercart();
+}
+
+function rendercart() {
+    if(cart.length > 0) {
+        var html = '';
+        for (let i = 0; i < cart.length; i++) {
+            html += `<div class="cartlist-items">
+                        <div class="cartlist-left">
+                            <img src="${cart[i].img}" alt="Cartlist-img">
+                            <div class="cartlist-detail">
+                                <p style="font-size: 1.5vw;">${cart[i].name}</p>
+                                <p style="font-size: 1.2vw;">${'$ '+ numberWithCommas(cart[i].price * cart[i].count) }</p>
+                            </div>
+                        </div>
+                        <div class="cartlist-right">
+                            <p onclick="deinitems('-', ${i})" class="btnc">-</p>
+                            <p id="countitems${i}" style="margin: 0 20px;">${cart[i].count}</p>
+                            <p onclick="deinitems('+', ${i})" class="btnc">+</p>
+                        </div>
+                    </div>`;
+        }
+        $("#mycart").html(html)
+    } 
+    else {
+        $("#mycart").html(`<p>Not found product list</p>`)
+    }
+}
+
+function deinitems(action, index) {
+    if (action == '-') {
+        if(cart[index].count > 0) {
+            cart[index].count--;
+            $("#countitems"+index).text(cart[index].count)
+
+            if(cart[index].count <= 0) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Are you sure want to delete?",
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: "Delete",
+                    cancelButtonText: "Cancel"
+                }).then((res) => {
+                    if(res.isConfirmed) {
+                        cart.splice(index, 1)
+                        console.log(cart)
+                        rendercart();
+                        $("#cartcount").css('display', 'flex').text(cart.length)
+
+                        if(cart.length <= 0) {
+                            $("#cartcount").css('display', 'none')
+                        }
+                    }else {
+                        cart[index].count++;
+                        $("#countitems"+index).text(cart[index].count)
+                    }
+                    
+                })
+            }
+        }
+    }
+    if (action == '+') {
+        cart[index].count++;
+        $("#countitems"+index).text(cart[index].count)
     }
 }

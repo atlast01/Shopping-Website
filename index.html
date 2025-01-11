@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="index.css">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -20,10 +21,10 @@
 
             <div class="nav-profile">
                 <p class="nav-profile-name">Demo Shopping</p>
-                <div class="nav-profile-cart">
+                <div onclick="openCart()" class="nav-profile-cart">
                     <i class="fa fa-cart-shopping"></i>
-                    <div class="cartcount">
-                        5
+                    <div id="cartcount" class="cartcount" style="display: none;">
+                        0
                     </div>
                 </div>
             </div>
@@ -52,24 +53,24 @@
         </div>
     </div>
 
-    <div class="modal" style="display: none;">
-        <div class="modal-bg"></div>
+    <div id="modalDesc" class="modal" style="display: none;">
+        <div onclick="closeModal()" class="modal-bg"></div>
         <div class="modal-page">
             <h2>Detail</h2>
             <br>
             <div class="modaldesc-content">
-                <img src="./img/my-notion-face-customized.png" alt="modaldesc-image" class="modaldesc-image">
+                <img id="mdd-img" src="./img/my-notion-face-customized.png" alt="modaldesc-image" class="modaldesc-image">
                 <div class="modaldesc-detail">
-                    <p class="modaldesc-name">Product Name</p>
-                    <p class="modaldesc-price">Price: $100</p>
+                    <p id="mdd-name" class="modaldesc-name">Product Name</p>
+                    <p id="mdd-price" class="modaldesc-price">Price: $100</p>
                     <br>
-                    <p class="modaldesc-desc">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iure, voluptas excepturi ratione qui provident doloremque numquam expedita molestiae perferendis sequi et laboriosam adipisci quaerat, ad fuga? Sapiente qui obcaecati officiis.</p>
+                    <p id="mdd-desc" class="modaldesc-desc">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iure, voluptas excepturi ratione qui provident doloremque numquam expedita molestiae perferendis sequi et laboriosam adipisci quaerat, ad fuga? Sapiente qui obcaecati officiis.</p>
                     <br>
                     <div class="btn-control">
-                        <button class="btn btn-close">
+                        <button onclick="closeModal()" class="btn btn-close">
                             Close
                         </button>
-                        <button class="btn btn-addcart">
+                        <button onclick="addtocart()" class="btn btn-addcart">
                             Add to Cart
                         </button>
                     </div>
@@ -78,56 +79,15 @@
         </div>
     </div>
 
-    <div class="modal" style="display: none;">
-        <div class="modal-bg"></div>
+    <div id="modalCart" class="modal" style="display: none;">
+        <div onclick="closeModal()" class="modal-bg"></div>
         <div class="modal-page">
             <h2>My Cart</h2>
             <br>
-            <div class="cartlist">
-                <div class="cartlist-items">
-                    <div class="cartlist-left">
-                        <img src="./img/my-notion-face-customized.png" alt="Cartlist-img">
-                        <div class="cartlist-detail">
-                            <p style="font-size: 1.5vw;">Product name</p>
-                            <p style="font-size: 1.2vw;">Price: $100</p>
-                        </div>
-                    </div>
-                    <div class="cartlist-right">
-                        <p class="btnc">-</p>
-                        <p style="margin: 0 20px;">1</p>
-                        <p class="btnc">+</p>
-                    </div>
-                </div>
-                <div class="cartlist-items">
-                    <div class="cartlist-left">
-                        <img src="./img/my-notion-face-customized.png" alt="Cartlist-img">
-                        <div class="cartlist-detail">
-                            <p style="font-size: 1.5vw;">Product name</p>
-                            <p style="font-size: 1.2vw;">Price: $100</p>
-                        </div>
-                    </div>
-                    <div class="cartlist-right">
-                        <p class="btnc">-</p>
-                        <p style="margin: 0 20px;">1</p>
-                        <p class="btnc">+</p>
-                    </div>
-                </div>
-                <div class="cartlist-items">
-                    <div class="cartlist-left">
-                        <img src="./img/my-notion-face-customized.png" alt="Cartlist-img">
-                        <div class="cartlist-detail">
-                            <p style="font-size: 1.5vw;">Product name</p>
-                            <p style="font-size: 1.2vw;">Price: $100</p>
-                        </div>
-                    </div>
-                    <div class="cartlist-right">
-                        <p class="btnc">-</p>
-                        <p style="margin: 0 20px;">1</p>
-                        <p class="btnc">+</p>
-                    </div>
-                </div>
+            <div id="mycart" class="cartlist">
                 
-                <div class="btn-control">
+                
+                <div onclick="closeModal()" class="btn-control">
                     <button class="btn btn-close">
                         Close
                     </button>
